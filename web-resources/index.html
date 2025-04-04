@@ -1,10 +1,18 @@
+<!DOCTYPE html>
 <html lang="en">
 <header>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta title="go-chord-progression" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta title="go-chord-progression"/>
+    <link rel="stylesheet" href="_reset.css">
+    <link rel="stylesheet" href="player.css"/>
 </header>
 <body>
-
+    <audio id="player" controls autoplay>
+        <!-- workaround: if you don't use the default port 9001, you must set the actual port here too -->
+        <source src="http://localhost:9001/sample.mp3" type="audio/mpeg">
+        <h1>Oh no, something wrong with your browser?</h1>
+        <p>It looks like that your browser does not support HTML5 audio players. In 2025 and later? Weird.</p>
+    </audio>
 </body>
 </html>
