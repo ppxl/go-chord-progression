@@ -33,6 +33,7 @@ var (
 	NoteGis1 = Note{"Gis1", 1661.22}
 )
 
+// allNotes contains a slice of notes sorted by semitone from low to high.
 var allNotes = []Note{
 	NoteA__0, NoteAis0, NoteB__0, NoteC__0, NoteCis0, NoteD__0, NoteDis0, NoteE__0, NoteF__0, NoteFis0, NoteG__0, NoteGis0, NoteA__1, NoteAis1, NoteB__1, NoteC__1, NoteCis1, NoteD__1, NoteDis1, NoteE__1, NoteF__1, NoteFis1, NoteG__1, NoteGis1,
 }
@@ -97,5 +98,5 @@ func findBaseNoteStart(baseNote Note) int {
 			return i
 		}
 	}
-	panic(fmt.Sprintf("chords: unable to find base note %v", baseNote))
+	panic(fmt.Sprintf("unable to find base note start for %v", baseNote))
 }
