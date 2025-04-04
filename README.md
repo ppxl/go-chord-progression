@@ -26,7 +26,7 @@ origins from Nickel Flower and was also released into the public domain (CC0).
 
 ## Prior Art
 
-Considered detecting, managing and working with USB audio devices by means of Golang is a bit a toughie for an art project of one day, the idea of playing music through the browser is absolutely lovey. I got heavily inspired by this Dynamsoft page about [playing music with HTML5](https://www.dynamsoft.com/codepool/implement-simple-music-player-in-go.html).
+Considered detecting, managing and working with USB audio devices by means of Golang is a bit a toughie for an art project of one day, the idea of playing music through the browser is absolutely lovely. I got heavily inspired by this Dynamsoft page about [playing music with HTML5](https://www.dynamsoft.com/codepool/implement-simple-music-player-in-go.html).
 
 I did not copy code from Dynamsoft, though.
 
