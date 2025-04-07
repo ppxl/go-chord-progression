@@ -2,11 +2,11 @@ package chords
 
 import "fmt"
 
-// primaryMajorIntervals counts the actual semitones between the primary chords, making it possible to mathematically
-// count primaries independently of the base note.
+// majorIntervals counts the actual semitones between the major chords, making it possible to mathematically
+// count primaries, etc. independently of the base note.
 // I II III IV V VI VII I¹
 // 0, 2, 2, 1, 2, 2, 2, 1
-var primaryMajorIntervals = map[ChordInt]int{
+var majorIntervals = map[ChordInt]int{
 	ChordIntI:   0,
 	ChordIntII:  0 + 2,
 	ChordIntIII: 0 + 2 + 2,
@@ -14,6 +14,48 @@ var primaryMajorIntervals = map[ChordInt]int{
 	ChordIntV:   0 + 2 + 2 + 1 + 2,
 	ChordIntVI:  0 + 2 + 2 + 1 + 2 + 2,
 	ChordIntVII: 0 + 2 + 2 + 1 + 2 + 2 + 2,
+}
+
+// minorHarmonicIntervals counts the actual semitones between the harmonic minor chords, making it possible to mathematically
+// count primaries, etc. independently of the base note.
+// I II III IV V VI VII I¹
+// 0, 2, 1, 2, 2, 1, 3, 1
+var minorHarmonicIntervals = map[ChordInt]int{
+	ChordIntI:   0,
+	ChordIntII:  0 + 2,
+	ChordIntIII: 0 + 2 + 1,
+	ChordIntIV:  0 + 2 + 1 + 2,
+	ChordIntV:   0 + 2 + 1 + 2 + 2,
+	ChordIntVI:  0 + 2 + 1 + 2 + 2 + 1,
+	ChordIntVII: 0 + 2 + 1 + 2 + 2 + 1 + 3,
+}
+
+// minorNaturalIntervals counts the actual semitones between the natural minor chords, making it possible to mathematically
+// count primaries, etc. independently of the base note.
+// I II III IV V VI VII I¹
+// 0, 2, 1, 2, 2, 1, 2, 2
+var minorNaturalIntervals = map[ChordInt]int{
+	ChordIntI:   0,
+	ChordIntII:  0 + 2,
+	ChordIntIII: 0 + 2 + 1,
+	ChordIntIV:  0 + 2 + 1 + 2,
+	ChordIntV:   0 + 2 + 1 + 2 + 2,
+	ChordIntVI:  0 + 2 + 1 + 2 + 2 + 1,
+	ChordIntVII: 0 + 2 + 1 + 2 + 2 + 1 + 2,
+}
+
+// minorMelodicIntervals counts the actual semitones between the melodic minor chords, making it possible to mathematically
+// count primaries, etc. independently of the base note.
+// I II III IV V VI VII I¹
+// 0, 2, 1, 2, 2, 2, 2, 1
+var minorMelodicIntervals = map[ChordInt]int{
+	ChordIntI:   0,
+	ChordIntII:  0 + 2,
+	ChordIntIII: 0 + 2 + 1,
+	ChordIntIV:  0 + 2 + 1 + 2,
+	ChordIntV:   0 + 2 + 1 + 2 + 2,
+	ChordIntVI:  0 + 2 + 1 + 2 + 2 + 2,
+	ChordIntVII: 0 + 2 + 1 + 2 + 2 + 2 + 2,
 }
 
 // primary chords are: I, IV, V.
@@ -24,7 +66,7 @@ var primaryMajorIntervals = map[ChordInt]int{
 // In a major key, all secondary chords are minor triads.
 // In a minor key, the primary chords III and VI are major triads, II is a diminished triad.
 func intervalChordNotes(baseNote Note, desiredInterval ChordInt) Note {
-	semitoneInterval, ok := primaryMajorIntervals[desiredInterval]
+	semitoneInterval, ok := majorIntervals[desiredInterval]
 	if !ok {
 		panic(fmt.Sprintf("unsupported interval: %s: accepted are roman numerals I..VII", desiredInterval))
 	}
