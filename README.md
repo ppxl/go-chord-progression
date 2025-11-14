@@ -18,13 +18,8 @@ Public License.
 
 As an artist, I want to encourage others to make art and music but not avoid commercial grifters to take their share.
 
-The code also contains (yet) code copied from [Dylan Meeus' GoAudio](https://github.com/DylanMeeus/GoAudio/blob/master/LICENSE) library which is released under the MIT License. The code is for now copypasta'd to get the file bytes but it would be easier to write the file and read it back than copying all the unexported symbols. Sigh.
-
 The [Reset CSS styles](https://meyerweb.com/eric/tools/css/reset/) origins from Eric Meyer, meyerweb, which was released
 into the public domain.
-
-The [HTML Audio test file "Dusky Cove"](https://creazilla.com/media/audio/15451024/dusky-cove) saved in `sample.mp3` 
-origins from Nickel Flower and was also released into the public domain (CC0).
 
 ## Prior Art
 
