@@ -26,7 +26,7 @@ const (
 // Modified by amplitude / frequency breakpoints
 func Generate(theChords *chords.Chord, filename string) error {
 
-	osc, err := synth.NewOscillator(sampleRate, synth.SQUARE)
+	osc, err := synth.NewOscillator(sampleRate, synth.DOWNWARD_SAWTOOTH)
 	if err != nil {
 		return fmt.Errorf("failed to create oscillator: %w", err)
 	}
@@ -42,7 +42,8 @@ func Generate(theChords *chords.Chord, filename string) error {
 			const maxamp = 0.6
 			value := synth.ADSR(maxamp, durationInSecs, a, d, s, r, sampleRate, timeframe)
 
-			chordBaseFreq := theChords.Notes[count].BaseFrequency
+			lazyPitchReducer := 4.0
+			chordBaseFreq := theChords.Notes[count].BaseFrequency / lazyPitchReducer
 			frequencyStep := value * osc.Tick(chordBaseFreq)
 			frames = append(frames, wave.Frame(frequencyStep))
 			timeframe++
