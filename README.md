@@ -17,6 +17,8 @@ chmod +x go-chord-progression
 
 Then point your browser to http://localhost:9001/index.html
 
+You can view/listen to [example output](go-chord-progression.mp4). Note the output is generated procedurally and never the same.
+
 ## Licenses
 
 This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
