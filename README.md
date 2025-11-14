@@ -9,6 +9,12 @@ go-chord-progression is a project that aims to create and play harmonic chords.
 go run .
 ```
 
+Or download the binary release and go:
+```shell
+chmod +x go-chord-progression
+./go-chord-progression
+```
+
 Then point your browser to http://localhost:9001/index.html
 
 ## Licenses
