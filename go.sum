@@ -1,3 +1,5 @@
+github.com/0x6flab/namegenerator v1.4.0 h1:QnkI813SZsI/hYnKD9pg3mkIlcYzCx0N4hnzb0YYME4=
+github.com/0x6flab/namegenerator v1.4.0/go.mod h1:2sQzXuS6dX/KEwWtB6GJU729O3m4gBdD5oAU8hd0SyY=
 github.com/DylanMeeus/GoAudio v0.13.1 h1:vxsqF+5Sn12aY6+AcPoG8H/P8+TfSH/XPaHAC/gY0Ng=
 github.com/DylanMeeus/GoAudio v0.13.1/go.mod h1:V+oGHNuF+LDkPKK/LDzQs5HUs80TEn2LG9d8bYdbF/c=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=

@@ -13,6 +13,6 @@ func TestGenerate(t *testing.T) {
 	chord.Append(chords.NewFor(chords.MinorMelodicIntervals))
 	chord.Append(chords.NewFor(chords.MinorMelodicIntervals))
 	chord.Append(chords.NewFor(chords.MinorMelodicIntervals))
-	err := Generate(chord)
+	err := Generate(chord, "")
 	require.NoError(t, err)
 }

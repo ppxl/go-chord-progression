@@ -21,11 +21,6 @@ const (
 	triangle
 )
 
-// example use of the oscillator to generate different waveforms
-var (
-	OutputFile = "/home/bschaa/projekte/privat/2025-go-chord-progression/target/audio.mp3"
-)
-
 const (
 	sampleRate     = 44100
 	durationInSecs = sampleRate * 1
@@ -33,9 +28,9 @@ const (
 
 // Generate creates an audio wave from an oscillator of a given shape and durationInSecs
 // Modified by amplitude / frequency breakpoints
-func Generate(theChords *chords.Chord) error {
+func Generate(theChords *chords.Chord, filename string) error {
 
-	osc, err := synth.NewOscillator(sampleRate, synth.TRIANGLE)
+	osc, err := synth.NewOscillator(sampleRate, synth.SQUARE)
 	if err != nil {
 		return fmt.Errorf("failed to create oscillator: %w", err)
 	}
@@ -52,16 +47,19 @@ func Generate(theChords *chords.Chord) error {
 			value := synth.ADSR(maxamp, durationInSecs, a, d, s, r, sampleRate, timeframe)
 
 			timeframe++
+			//floats := FramesToFloats(frames)
+			//filteredValue := synth.Lowpass(floats, 500.0, 3, sampleRate)
+			//frames = wave.FloatsToFrames(filteredValue)
 			frames = append(frames, wave.Frame(value*osc.Tick(theChords.Notes[count].BaseFrequency)))
 		}
 	}
 
 	bitsPerSample := 16
 	wfmt := wave.NewWaveFmt(1, 1, sampleRate, bitsPerSample, nil)
-	err = wave.WriteFrames(frames, wfmt, OutputFile)
+	err = wave.WriteFrames(frames, wfmt, filename)
 	//bytes := toBytes(frames, wfmt)
 	if err != nil {
-		return fmt.Errorf("failed to write wave to file %s: %w", OutputFile, err)
+		return fmt.Errorf("failed to write wave to file %s: %w", filename, err)
 	}
 
 	return nil

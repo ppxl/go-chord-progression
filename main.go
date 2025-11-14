@@ -13,6 +13,7 @@ const defaultPort = "9001"
 func main() {
 	http.HandleFunc("/", api.ServeStatic)
 	http.HandleFunc("/audio", api.ServeAudio)
+	http.HandleFunc("/generate", api.GenerateNewFileEndpoint)
 
 	port, isSet := os.LookupEnv("CHORD_PROG_PORT")
 	if isSet {
