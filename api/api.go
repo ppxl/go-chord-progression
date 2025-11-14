@@ -45,12 +45,15 @@ func GenerateNewFileEndpoint(w http.ResponseWriter, r *http.Request) {
 </form>
 </p>
 
-	<audio id="player" volume='0.3' controls autoplay>
+	<audio id="player" controls autoplay>
         <!-- workaround: if you don't use the default port 9001, you must set the actual port here too -->
         <source src="http://localhost:9001/audio?file=%s" type="audio/wav">
         <h1>Oh no, something wrong with your browser?</h1>
     	<p>It looks like that your browser does not support HTML5 audio players. In 2025 and later? Weird.</p>
 	</audio>
+<script type="text/javascript">
+	document.getElementById("player").volume=0.2;
+</script>
 </body>
 </html>
 `, outputFile)
@@ -67,7 +70,6 @@ func ServeAudio(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "audio/vnd.wave")
 	//w.Header().Set("Connection", "Keep-Alive")
 	//w.Header().Set("Transfer-Encoding", "chunked")
-	slog.Info("new connection")
 
 	err := r.ParseForm()
 	if err != nil {
@@ -75,6 +77,7 @@ func ServeAudio(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	outputFile := r.FormValue("file")
+	slog.Info("new connection for " + outputFile)
 
 	http.ServeFile(w, r, filepath.Join(outputFilePath, outputFile))
 }

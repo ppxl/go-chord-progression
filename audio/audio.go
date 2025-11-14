@@ -43,21 +43,20 @@ func Generate(theChords *chords.Chord, filename string) error {
 			d := float64(0.5)
 			s := float64(0.3)
 			r := float64(0.1)
-			const maxamp = 1
+			const maxamp = 0.6
 			value := synth.ADSR(maxamp, durationInSecs, a, d, s, r, sampleRate, timeframe)
 
+			chordBaseFreq := theChords.Notes[count].BaseFrequency
+			frequencyStep := value * osc.Tick(chordBaseFreq)
+			frames = append(frames, wave.Frame(frequencyStep))
 			timeframe++
-			//floats := FramesToFloats(frames)
-			//filteredValue := synth.Lowpass(floats, 500.0, 3, sampleRate)
-			//frames = wave.FloatsToFrames(filteredValue)
-			frames = append(frames, wave.Frame(value*osc.Tick(theChords.Notes[count].BaseFrequency)))
 		}
 	}
 
 	bitsPerSample := 16
-	wfmt := wave.NewWaveFmt(1, 1, sampleRate, bitsPerSample, nil)
+	wfmt := wave.NewWaveFmt(1, 2, sampleRate, bitsPerSample, nil)
 	err = wave.WriteFrames(frames, wfmt, filename)
-	//bytes := toBytes(frames, wfmt)
+	//bytes := toBytes(frames, wfmt) // prolly easier to read back the file into memory than all that below this function O_o')
 	if err != nil {
 		return fmt.Errorf("failed to write wave to file %s: %w", filename, err)
 	}
