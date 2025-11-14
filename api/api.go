@@ -1,9 +1,11 @@
 package api
 
 import (
-	"fmt"
+	"log/slog"
 	"net/http"
-	"time"
+
+	"go-chord-progression/audio"
+	"go-chord-progression/chords"
 )
 
 const (
@@ -14,24 +16,19 @@ const (
 // ServeAudio serves the chord progression audio file stream.
 func ServeAudio(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "audio/vnd.wave")
-	flusher, ok := w.(http.Flusher)
-	if !ok {
-		http.Error(w, "Streaming unsupported!", http.StatusInternalServerError)
-		return
+	//w.Header().Set("Connection", "Keep-Alive")
+	//w.Header().Set("Transfer-Encoding", "chunked")
+	slog.Info("new connection")
+	chord := chords.NewFor(chords.MajorIntervals)
+	chord.Append(chords.NewFor(chords.MajorIntervals))
+	chord.Append(chords.NewFor(chords.MinorMelodicIntervals))
+	chord.Append(chords.NewFor(chords.MajorIntervals))
+	err := audio.Generate(chord)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	w.Header().Set("Connection", "Keep-Alive")
-	w.Header().Set("Transfer-Encoding", "chunked")
 
-	for i := 0; i < 30; i++ {
-		_, err := fmt.Fprintf(w, "data: %d\n", i) // stream audio here
-		if err != nil {
-			http.Error(w, "error while writing to streaming", http.StatusInternalServerError)
-		}
-		flusher.Flush()
-		time.Sleep(300 * time.Millisecond)
-	}
-	// fixme, read file into a buffer and try to stream it slowly
-	http.ServeFile(w, r, "sample.mp3")
+	http.ServeFile(w, r, audio.OutputFile)
 }
 
 // ServeStatic serves all static files on the root route, f. i. the main page.

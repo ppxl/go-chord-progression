@@ -2,6 +2,7 @@ package chords
 
 import (
 	"fmt"
+	"math/rand/v2"
 )
 
 // note frequencies in Hertz (Hz), based on DIN Pitch Standard tone A, 440 Hz
@@ -54,10 +55,20 @@ const (
 	ChordIntVII ChordInt = "VII"
 )
 
+var AllChordInts = map[int]ChordInt{
+	0: ChordIntI,
+	1: ChordIntII,
+	2: ChordIntIII,
+	3: ChordIntIV,
+	4: ChordIntV,
+	5: ChordIntVI,
+	6: ChordIntVII,
+}
+
 // Note contains ChordKey indicates in which key a chord is supposed to be generated.
 type Note struct {
 	Name          string
-	baseFrequency float64
+	BaseFrequency float64
 }
 
 // ChordKey indicates in which key a chord is supposed to be generated.
@@ -76,9 +87,13 @@ type Chord struct {
 	Key   ChordKey
 }
 
-// Length returns the number of notes in this chord. It must not be less than two notes to build a chord.
-func (c Chord) Length() int {
+// Count returns the number of notes in this chord. It must not be less than two notes to build a chord.
+func (c *Chord) Count() int {
 	return len(c.Notes)
+}
+
+func (c *Chord) Append(chord *Chord) {
+	c.Notes = append(c.Notes, chord.Notes...)
 }
 
 // New creates a note without previously existing notes.
@@ -90,6 +105,22 @@ func New() Chord {
 
 	result.Notes = []Note{i, iv, v}
 	return result
+}
+
+func NewFor(scale Scale) *Chord {
+	result := Chord{}
+	isCurrentNoteFromDifferent := map[int]bool{}
+	for i := 0; i < 3; i++ {
+		notePicked := rand.IntN(7)
+		for isCurrentNoteFromDifferent[notePicked] {
+			notePicked = rand.IntN(7)
+		}
+		intervalNote := AllChordInts[notePicked]
+
+		result.Notes = append(result.Notes, intervalChordNotesByScale(NoteC__0, intervalNote, scale))
+		isCurrentNoteFromDifferent[notePicked] = true
+	}
+	return &result
 }
 
 func findBaseNoteStart(baseNote Note) int {

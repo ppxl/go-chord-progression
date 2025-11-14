@@ -2,11 +2,11 @@ package chords
 
 import "fmt"
 
-// majorIntervals counts the actual semitones between the major chords, making it possible to mathematically
+// MajorIntervals counts the actual semitones between the major chords, making it possible to mathematically
 // count primaries, etc. independently of the base note.
 // I II III IV V VI VII I¹
 // 0, 2, 2, 1, 2, 2, 2, 1
-var majorIntervals = map[ChordInt]int{
+var MajorIntervals = map[ChordInt]int{
 	ChordIntI:   0,
 	ChordIntII:  0 + 2,
 	ChordIntIII: 0 + 2 + 2,
@@ -44,11 +44,11 @@ var minorNaturalIntervals = map[ChordInt]int{
 	ChordIntVII: 0 + 2 + 1 + 2 + 2 + 1 + 2,
 }
 
-// minorMelodicIntervals counts the actual semitones between the melodic minor chords, making it possible to mathematically
+// MinorMelodicIntervals counts the actual semitones between the melodic minor chords, making it possible to mathematically
 // count primaries, etc. independently of the base note.
 // I II III IV V VI VII I¹
 // 0, 2, 1, 2, 2, 2, 2, 1
-var minorMelodicIntervals = map[ChordInt]int{
+var MinorMelodicIntervals = map[ChordInt]int{
 	ChordIntI:   0,
 	ChordIntII:  0 + 2,
 	ChordIntIII: 0 + 2 + 1,
@@ -58,6 +58,8 @@ var minorMelodicIntervals = map[ChordInt]int{
 	ChordIntVII: 0 + 2 + 1 + 2 + 2 + 2 + 2,
 }
 
+type Scale map[ChordInt]int
+
 // primary chords are: I, IV, V.
 // In a major key, all primary chords are major triads.
 // In a minor key, the primary chords I and IV are minor triads, V is still a major triad.
@@ -66,15 +68,18 @@ var minorMelodicIntervals = map[ChordInt]int{
 // In a major key, all secondary chords are minor triads.
 // In a minor key, the primary chords III and VI are major triads, II is a diminished triad.
 func intervalChordNotes(baseNote Note, desiredInterval ChordInt) Note {
-	semitoneInterval, ok := majorIntervals[desiredInterval]
+	return intervalChordNotesByScale(baseNote, desiredInterval, MajorIntervals)
+}
+func intervalChordNotesByScale(baseNote Note, desiredInterval ChordInt, scale Scale) Note {
+	semitoneInterval, ok := scale[desiredInterval]
 	if !ok {
-		panic(fmt.Sprintf("unsupported interval: %s: accepted are roman numerals I..VII", desiredInterval))
+		panic(fmt.Sprintf("unsupported scale: %s: accepted are roman numerals I..VII", desiredInterval))
 	}
 
 	if desiredInterval == ChordIntI {
 		return baseNote
 	}
-	// find the base note in all notes and then count the semitones up to get the desired interval note
+	// find the base note in all notes and then count the semitones up to get the desired scale note
 	// f. i. IV (5 semitones up) based on C: A,A#,B,|start here>C,C#,D,D#,E,F<---found
 	baseNoteStart := findBaseNoteStart(baseNote)
 	return allNotes[baseNoteStart+semitoneInterval]
