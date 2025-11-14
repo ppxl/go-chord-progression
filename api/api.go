@@ -86,6 +86,7 @@ func ServeStatic(writer http.ResponseWriter, req *http.Request) {
 
 func createAudioFile() (string, error) {
 	filename := namegenerator.NewGenerator().Generate()
+
 	chord := chords.NewFor(chords.MajorIntervals)
 	chord.Append(chords.NewFor(chords.MajorIntervals))
 	chord.Append(chords.NewFor(chords.MinorMelodicIntervals))
