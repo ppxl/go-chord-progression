@@ -3,6 +3,8 @@ go-chord-progression
 
 go-chord-progression is a project that aims to create and play harmonic chords.
 
+This project was further developed during my learning day 2025 and the main point is to build schemes of harmonics. While it would be optimal to build chords, I didn't get this to work with the underlying golang library. At least there are melodies which is fine, too.
+
 ## How to run
 
 ```bash
